@@ -212,7 +212,8 @@ mod tests {
         let mut writer = BufWriter::new(client_socket.try_clone().unwrap());
         writer.write(b"Test Msg!").unwrap();
         writer.flush().unwrap();
+        drop(writer);
 
-        thread::sleep(time::Duration::from_secs_f32(0.2))
+        thread::sleep(time::Duration::from_secs_f32(3.2))
     }
 }
