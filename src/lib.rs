@@ -186,11 +186,11 @@ mod tests {
     #[test]
     fn server_test() {
         fn on_connect(address: SocketAddr) {
-            println!("On Connect!");
+            println!("[{}] connected!", address.ip());
         }
 
         fn on_disconnect(address: SocketAddr) {
-            println!("{} disconnected!", address.to_string())
+            println!("[{}] disconnected!", address.to_string())
         }
 
         fn on_message(address: SocketAddr, message: String) {
@@ -208,7 +208,7 @@ mod tests {
         let lock_server = server.lock().expect("Mutex is poisoned!");
         lock_server.start();
 
-        let mut client_socket = TcpStream::connect("127.0.0.1:8989").unwrap();
+        let client_socket = TcpStream::connect("127.0.0.1:8989").unwrap();
         let mut writer = BufWriter::new(client_socket.try_clone().unwrap());
         writer.write(b"Test Msg!").unwrap();
         writer.flush().unwrap();
